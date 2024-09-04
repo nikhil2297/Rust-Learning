@@ -3,8 +3,8 @@
 ## Table of Contents
 - [Ownership Model for Memory Management](#ownership-model-for-memory-management)
 - [Mutable and Immutable](#mutable-and-immutable)
-- [Errors in Rust](#errors-in-rust)
-- [Variables and Datatypes](#variables-and-datatypes)
+- [Error Handling in Rust](#error-handling-in-rust)
+- [Programming Concepts](#programming-concepts)
 - [Guessing Game](#guessing-game)
   - [Phase 1: User Input](#phase-1-user-input)
   - [Phase 2: Generate Random Number and Compare](#phase-2-generate-random-number-and-compare)
@@ -98,7 +98,7 @@ And when passing the variable to the function:
 
 This is how mutability is handled in Rust.
 
-## Errors in Rust
+## Error Handling in Rust
 
 Rust has two types of errors: recoverable errors and unrecoverable errors.
 
@@ -144,9 +144,64 @@ Here, we're making the error recoverable by using the `Result` type. The `divide
 
 We use `Err` to create an error response and `Ok` for a success response. The calling function can use a `match` expression to handle both `Ok` and `Err` cases, similar to promises in JavaScript.
 
-## Variables and Datatypes
+## Programming Concepts
+#### Keywords
+In every programming language there is list of keywords that are associated with that language and it cannot be used to define variables. Same is with the Rust, there list of words like `﻿let` , `﻿fn` , `﻿as` , `﻿in` , `﻿if` , `﻿else` , `﻿break` etc. You take a look at this link [﻿Appendix A](https://doc.rust-lang.org/book/appendix-01-keywords.html).
+```rust
+fn keyword_example() { 
+	let fn = 32; 
+		^^ expected identifier, found keyword 
+}
+```
+In the above code, we try create a variable with a name that are mentioned in keyboard then we get the error `expected identifier, found keyword`
+  
+ #### Variables
+ 
+| Let | const | 
+| ----- | ----- | 
+| All variable are immutalbe by default and can be made mutable by adding `﻿mut` before identifier. | In const, we cannot use `﻿mut` keyboard because consts are strictly immutable by default and cannot be changed | 
+| Let keyword infer type by default eg: `﻿let age = 32` , In this age will automatically infer type as `i32` | In const we need to explicitly add the type. | 
+| Let are binded by scope. | const can be declare globally and they can also binded by scope | 
+| Let value are can be set during compile time and runtime as well | const value are set and known during compile time, not during runtime. |
 
-(Section pending)
+Code Example
+
+```rust
+const HOURS_IN_DAY : i32 = 24;
+
+fn immutable_example() {
+    let age = 25;
+    println!("Your immutalbe age is  {}", age);
+}
+
+fn mutable_example() {
+    let mut age = 25;
+    println!("Your mutalbe age is  {}", age);
+    age = 26;
+    println!("Your mutalbe new age is  {}", age);
+}
+
+fn const_example() {
+    const AGE : i32 = 25;
+    println!("You const varialbe age is {}", AGE);
+}
+```
+#### Shadowing
+- Decaling a variable with same name within the scope it means shadowing, i.e second variable osershadow the first varialbe. 
+-  We can also shadow the variable with different data types 
+-  Shadow varialbe destroy when scope ends. 
+-  Shadowing is different from marking a variable as `mut` because we’ll get a compile-time error if we accidentally try to reassign to this variable without using the `let` keyword
+
+```rust
+let x = 5; 
+let x = x + 1; 
+{ 
+	let x = x * 2; 
+	println!("The value of x in the inner scope is: {x}"); 
+} 
+println!("The value of x is: {x}");
+```
+In the given code, we first declare `x` as an `i32` type and bind it to `5`. Then, we shadow the first `x` with a new value, `x + 1`. Inside a new scope, we shadow `x` again, this time modifying it to `x * 2`. This inner `x` only exists within this scope and is destroyed when the scope ends. Finally, we print the value of `x` in the outer scope.
 
 ## Guessing Game
 
