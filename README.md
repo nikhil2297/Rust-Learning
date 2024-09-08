@@ -397,76 +397,45 @@ To access th earray element we can use element index like we do it in all progra
 
 Suppose you are try to access the index of array which is not presented in the array list. Then rust will panic and exit the code showing `﻿index out of bounds`  error. Which makes the rust different from low-level languges which allows you to continue the code if after memory access error. Where in rust it exit the code ask us to handle it.
 
+## Guessing Game
 
-#### Functions
-Functions are most frequently used in rust. We create a function with `﻿fn` keyword and use `snake_case` for naming convention. 
+### Phase 1: User Input
 
-`﻿main` is the entry point of rust file and we don't return anything in `﻿main` function and when we write other function  we write it below `﻿main`  function.
-
-```rust
-fn main() {
-    println!("Hello, world!");
-
-    another_function();
-}
-
-fn another_function() {
-    println!("Another function.");
-}
-```
-We can define funtions to have `parameters`  and we can pass a concrete values which are called `﻿arguments` .
+To understand how to take input from a user, we'll use Rust's standard input/output library:
 
 ```rust
-fn main() {
-    print_labeled_measurement(5, 'h');
-}
+use std::io;
 
-fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!("The measurement is: {value}{unit_label}");
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {}", guess);
 }
 ```
-**Statements and Expressions**
 
-Function bodies are made up of series of statements and optionally ending with expression. **Statements**** **are instructions that perform some actions and do not return a value. **Expression** are something that returns a value. Let's take an example.
+We use `use std::io` to import the standard I/O library. In Rust, there's a concept called "prelude" which includes a list of predefined libraries that come with every program. `std::io` is not part of the prelude, so we need to import it explicitly.
 
-```rust
-fn main() {
-    let y = 6;
-    let x = 13 + y;
+Variables in Rust are immutable by default. To make them mutable, we add `mut` when creating a variable: `let mut guess`.
 
-}
-```
-In the above code. There are 2 satements inside the `﻿main`  function. `﻿let y = 6;`  and `﻿let x = 13 + y;`  is a statement which also contain a expression which returns a value like in first statment `﻿6`  is expression which returns a value, and in second statement `13 + y`  is a expression which returns a value `19 (13 + 6)` .
+The `read_line` method appends the input to the variable rather than overwriting it. That's why it needs a mutable reference `&mut`. A mutable reference means that it needs permission from the variable's owner to append input to it.
 
+`String::new()` indicates that `new` is an associated function of `String`. This is a common way to create a new instance of a type.
 
-
-**Return Value**
-
-In rust, there are two ways to return a value either we `﻿return`  keyword to return a value or we don't use return keyword to return a value. It might be confusing but let's take look with code.
-
-```rust
-fn main() {
-    let y = {
-        let x = 3;
-        return x + 1;
-    };
-    
-    let x = {
-      let temp = 10;
-      temp + 3
-    }
-
-    println!("The value of y is: {y}");
-}
-```
-First expression returns a value using `﻿return`  keyword.  Second expression also return a value just with expression and without semi-colon and if we put a semicolon it becomes a  statement. These kind of expression can only be return in the last line of a function. To return early in a function then we have to use return keyword.  
-
+`read_line` returns a `Result` type, which is an enum with two states: `Ok` and `Err`. We use `expect` to handle potential errors.
 
 ### Phase 2: Generate Random Number and Compare
 
 To generate a random number, we'll add the `rand` crate to our project:
 
-```rust
+```
 cargo add rand
 ```
 
