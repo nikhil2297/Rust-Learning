@@ -460,6 +460,114 @@ fn main() {
 ```
 First expression returns a value using `﻿return`  keyword.  Second expression also return a value just with expression and without semi-colon and if we put a semicolon it becomes a  statement. These kind of expression can only be return in the last line of a function. To return early in a function then we have to use return keyword.  
 
+
+#### Control Flow
+The ability to run a code multiple times or based on certain condition are the part of control flow.
+
+
+
+`﻿**if**`  Expression.
+
+An `﻿if`  expression allows you run the code inside the `﻿if`  arms, if the condition is met as a expression can only be `﻿true` or `false` that is the data type of expression is always boolean. If condition is not met we can also provide with a optional `﻿else`  condition which run if none of the condition is met.
+
+In `﻿if-else`  we can also provide mutliple `﻿if`  conditions as shown in below code. In rust, as soon as the any of the condition is true it will not check for any other conditions. 
+
+```
+fn main() {
+    let number = 6;
+
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+    }
+}
+```
+In previous section, we learned about how to return a expression without a `﻿return`  keyword. In `﻿if`  statement we also return a condition based value and return type should be same for both condition as shown in below code.
+
+```
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+
+    println!("The value of number is: {number}");
+}
+```
+**Note :  **`**If**`** condition without return expression can have optional **`**else**`** condition. With return expression **`**else**`** is compalsory. **
+
+
+**Repetition with Loops**
+
+Rust has three kinds of loops : `﻿loop` , `﻿while`  and `﻿for` .
+
+****`﻿**loop**`  keyword tells a block of code to repeat infinitly. Unless we break the loop by adding `﻿break`  keyword. 
+
+For example 
+
+```
+fn main() {
+    loop {
+        println!("again!");
+    }
+}
+```
+This will print `﻿again`  infinitely and eventually will crash the program. So we need to add `﻿break`  keyword as shown below
+
+```
+fn main() {
+    loop {
+        println!("again!");
+        break;
+    }
+}
+```
+Above code we print `﻿again` once then it will exit the loop with the help of `﻿break` .
+
+Few key points to remmeber while working with `loops`  :
+
+1. In `loop` if you want the code to move to next interation early then we have to use `﻿continue` 
+2. We can also assign the `﻿loop`  to a variable and return a value uising `﻿break <value you want to return>;` 
+3. We create a nested loop and we can also `﻿break`  and `﻿continue`  the parent loop from children loop with the help of loop labels.
+
+
+Let have a example with the code.
+
+```
+fn main() {
+    let mut count: u32 = 4;
+    let mut result : u32 = 0;
+    'counting_up: loop {
+        if count == 0 {
+            break;
+        }
+        let mut num: u32 = 10;
+        let mut factorial : u32 = 1; 
+        result += loop {
+            if num == 1 {
+                break factorial;
+            }
+            if count == 0 {
+                continue 'counting_up;
+            }
+            factorial *= num;
+            num -= 1;
+        };
+        println!("count = {count}, factorial : {factorial}");
+        count -= 1;
+    
+    }
+    println!("Result = {result}");    
+}
+```
+Above code created a 10 factorial and add it 4 times as per mentioned in the `﻿count`  variable. Then finally added to `result`  variable and print it. So we have created 2 loops one for looping through count with a name `﻿counting_up`  and a nested loop to get the factorial.
+
+As we mentioned in above points we are using `continue`  in nested loop which is moving to next iteration. We are assingin the `result`  to `loop`  and when `num == 1`  it breaks the nested loop and return the `factorial` value.
+
+
 ## Guessing Game
 
 ### Phase 1: User Input
